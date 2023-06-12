@@ -1,0 +1,37 @@
+[
+    {
+        "model": "tastyapi.category",
+        "pk": 1,
+        "fields": {
+            "name": "Appetizer"
+        }
+    },
+    {
+        "model": "tastyapi.category",
+        "pk": 2,
+        "fields": {
+            "name": "Breakfast"
+        }
+    },
+    {
+        "model": "tastyapi.category",
+        "pk": 3,
+        "fields": {
+            "name": "Lunch"
+        }
+    },
+    {
+        "model": "tastyapi.category",
+        "pk": 4,
+        "fields": {
+            "name": "Dinner"
+        }
+    },
+    {
+        "model": "tastyapi.category",
+        "pk": 5,
+        "fields": {
+            "name": "Dessert"
+        }
+    }
+]
