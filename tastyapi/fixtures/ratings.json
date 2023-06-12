@@ -1,0 +1,11 @@
+[
+    {
+        "model": "tastyapi.rating",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "recipe": 1,
+            "score": 5
+        }
+    }
+]

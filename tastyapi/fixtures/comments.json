@@ -1,0 +1,12 @@
+[
+    {
+        "model": "tastyapi.comment",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "recipe": 1,
+            "content": "You can substitute the unsalted butter with vegan butter!",
+            "postdate": "2023-05-02"
+        }
+    }
+]
