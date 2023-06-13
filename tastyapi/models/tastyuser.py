@@ -9,3 +9,8 @@ class TastyUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 # add a property for full name later after running client side
+    @property
+    def full_name(self):
+        """converts first/last name field into 
+        a single property string"""
+        return f'{self.user.first_name} {self.user.last_name}'
