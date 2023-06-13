@@ -1,0 +1,20 @@
+[
+    {
+        "model": "tastyapi.recipe",
+        "pk": 1,
+        "fields": {
+            "name": "Lasso Shortbread",
+            "category": 5,
+            "image_path": "https://cdispatch.com/wp-content/uploads/2021/11/ted-lasso_s-biscuits.jpg",
+            "summary": "If you're a Ted Lasso fan — and who isn't? — you're going to want this recipe.",
+            "cook_time": "40-45 minutes",
+            "prep_time": "10-15 minutes",
+            "total_time": "1 hour",
+            "ingedients": "2 cups all-purpose flour, 1/4 teaspoons coarse salt, 1 cup (2 sticks) unsalted butter room temperature, 3/4 cup confectioners' sugar",
+            "preparation": "Recipe here",
+            "create_date": "2023-05-01",
+            "author": 1,
+            "comments": []
+        }
+    }
+]
