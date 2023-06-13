@@ -1,0 +1,13 @@
+[
+    {
+      "model": "tastyapi.tastyuser",
+      "pk": 1,
+      "fields": {
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "profile_image_url": "https://example.com/profile1.jpg",
+        "created_on": "2023-05-01",
+        "active": true,
+        "user": 1
+      }
+    }
+  ]
