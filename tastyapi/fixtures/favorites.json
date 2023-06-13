@@ -1,0 +1,10 @@
+[
+    {
+        "model": "tastyapi.favorite",
+        "pk": 1,
+        "fields": {
+            "recipe": 1,
+            "user": 1
+        }
+    }
+]
