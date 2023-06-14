@@ -2,6 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from tastyapi.models import Recipe, TastyUser, Category
+from django.contrib.auth.models import User
 
 class RecipeView(ViewSet):
     """Recipe Post View"""
@@ -28,6 +29,49 @@ class RecipeView(ViewSet):
         serializer = RecipeSerializer(recipe)
         return Response(serializer.data)
 
+    # TO-DO: Make a create method so that
+    # users on the client side can create a new
+        # recipe post
+
+    def create(self, request):
+        """Handles POST request for recipes"""
+
+        # author = TastyUser.objects.get(pk=request.auth.user.id)
+        # category = Category.objects.get(pk=request.data["category"])
+
+        # recipe = Recipe.objects.create(
+        #     name=request.data["name"],
+        #     category=category,
+        #     image_path=request.data["image_path"],
+        #     summary=request.data["summary"],
+            # cook_time=request.data["cook_time"],
+            # prep_time=request.data["prep_time"],
+            # total_time=request.data["total_time"],
+            # ingredients=request.data["ingredients"],
+            # preparation=request.data["preparation"],
+            # create_date=request.data["create_date"],
+        #     author=author
+        # )
+
+        new_recipe = Recipe()
+        new_recipe.name = request.data["name"]
+        new_recipe.category = Category.objects.get(pk=request.data["category"])
+        new_recipe.image_path = request.data["image_path"]
+        new_recipe.summary = request.data["summary"]
+        new_recipe.cook_time=request.data["cook_time"]
+        new_recipe.prep_time=request.data["prep_time"]
+        new_recipe.total_time=request.data["total_time"]
+        new_recipe.ingredients=request.data["ingredients"]
+        new_recipe.preparation=request.data["preparation"]
+        new_recipe.create_date=request.data["create_date"]
+        new_recipe.author=User.objects.get(pk=request.auth.user.id)
+        new_recipe.save()
+
+        serializer = RecipeSerializer(new_recipe)
+        return Response(serializer.data)
+
+    # TO-DO: Recipes will need to be filtered by category - query.param
+
 class RecipeTastyUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = TastyUser
@@ -46,3 +90,4 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'category', 'image_path', 'summary', 'cook_time', 'prep_time', 'total_time', 'ingredients', 'preparation', 'create_date', 'author')
+
