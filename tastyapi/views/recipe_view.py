@@ -36,23 +36,6 @@ class RecipeView(ViewSet):
     def create(self, request):
         """Handles POST request for recipes"""
 
-        # author = TastyUser.objects.get(pk=request.auth.user.id)
-        # category = Category.objects.get(pk=request.data["category"])
-
-        # recipe = Recipe.objects.create(
-        #     name=request.data["name"],
-        #     category=category,
-        #     image_path=request.data["image_path"],
-        #     summary=request.data["summary"],
-            # cook_time=request.data["cook_time"],
-            # prep_time=request.data["prep_time"],
-            # total_time=request.data["total_time"],
-            # ingredients=request.data["ingredients"],
-            # preparation=request.data["preparation"],
-            # create_date=request.data["create_date"],
-        #     author=author
-        # )
-
         new_recipe = Recipe()
         new_recipe.name = request.data["name"]
         new_recipe.category = Category.objects.get(pk=request.data["category"])
