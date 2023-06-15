@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
-from rest_framework import serializers, status
+
 from tastyapi.models import Category
 
 class CategoryView(ViewSet):
@@ -28,7 +28,4 @@ class CategoryView(ViewSet):
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ('id', 'name')
+
