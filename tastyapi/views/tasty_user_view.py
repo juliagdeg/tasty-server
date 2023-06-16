@@ -26,4 +26,3 @@ class TastyUsersView(ViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except TastyUser.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
-        
