@@ -8,7 +8,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r"recipes", RecipeView, "recipe")
 router.register(r"categories", CategoryView, "category")
 router.register(r'profile', ProfileView, 'profile')
-# router.register(r'tasty-users', TastyUsersView, 'user')
+router.register(r'tasty-users', TastyUsersView, 'user')
 
 urlpatterns = [
     path('register', register_user),

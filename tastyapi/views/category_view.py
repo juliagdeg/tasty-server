@@ -2,6 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 
 from tastyapi.models import Category
+from tastyapi.serializers import CategorySerializer
 
 class CategoryView(ViewSet):
     """Recipe Post View"""
@@ -27,5 +28,3 @@ class CategoryView(ViewSet):
         category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
-
-
