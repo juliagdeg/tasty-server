@@ -4,6 +4,9 @@ from rest_framework import serializers, status
 from tastyapi.models import Recipe, TastyUser, Category
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
+from rest_framework.decorators import action
+
+from tastyapi.models import Rating
 
 from tastyapi.serializers import RecipeSerializer
 
@@ -88,4 +91,23 @@ class RecipeView(ViewSet):
         serializer = RecipeSerializer(new_recipe)
         return Response(serializer.data)
 
+    @action(methods=['post'], detail=True, url_path='rate-recipe')
+    def rate_recipe(self, request, pk):
+        """Rate a recipe"""
+        recipe = Recipe.objects.get(pk=pk)
+
+        try:
+            rating = Rating.objects.get(
+                user=request.auth.user, recipe=recipe
+            )
+            rating.score = request.data['score']
+            rating.save()
+        except Rating.DoesNotExist:
+            rating = Rating.objects.create(
+                user=request.auth.user,
+                recipe=recipe,
+                score=request.data['score']
+            )
+
+        return Response({'message': 'Rating added'}, status=status.HTTP_201_CREATED)
     # TO-DO: Recipes will need to be filtered by category - query.param
