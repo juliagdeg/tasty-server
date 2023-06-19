@@ -24,7 +24,7 @@ class ProfileView(ViewSet):
         #     return Response(serializer.data, status=status.HTTP_200_OK)
         # else:
         #     return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # user=request.auth.user
         # recipe = Recipe.objects.get(pk=pk, author=user)
         # if recipe:
@@ -32,9 +32,9 @@ class ProfileView(ViewSet):
         #     return Response(serializer.data, status=status.HTTP_200_OK)
         # else:
         #     return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         user = request.user
-        recipe = Recipe.objects.filter(author=user).first()  # Retrieve the first matching recipe
+        recipe = Recipe.objects.filter(author=user).first()
         if recipe:
             serializer = RecipeSerializer(recipe)
             user_serializer = RecipeTastyUserSerializer(user)

@@ -9,6 +9,12 @@ from tastyapi.serializers import RecipeSerializer
 class RecipeView(ViewSet):
     """Recipe Post View"""
 
+    def destroy(self, request, pk):
+        """Deletes a recipe"""
+        recipe = Recipe.objects.get(pk=pk)
+        recipe.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
     def list(self, request):
         """Handles GET requests to retrieve all recipe posts
         
