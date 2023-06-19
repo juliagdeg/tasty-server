@@ -3,11 +3,34 @@ from rest_framework.response import Response
 from rest_framework import serializers, status
 from tastyapi.models import Recipe, TastyUser, Category
 from django.contrib.auth.models import User
+from rest_framework.exceptions import ValidationError
 
 from tastyapi.serializers import RecipeSerializer
 
 class RecipeView(ViewSet):
     """Recipe Post View"""
+
+    def update(self, request, pk):
+        """Edit a recipe of the current user"""
+        category = Category.objects.get(pk=request.data['category'])
+
+        recipe = Recipe.objects.get(
+            pk=pk, author=request.auth.user)
+        recipe.name = request.data['name']
+        recipe.name = request.data["name"]
+        recipe.category = category
+        recipe.image_path = request.data["image_path"]
+        recipe.summary = request.data["summary"]
+        recipe.cook_time=request.data["cook_time"]
+        recipe.prep_time=request.data["prep_time"]
+        recipe.total_time=request.data["total_time"]
+        recipe.ingredients=request.data["ingredients"]
+        recipe.preparation=request.data["preparation"]
+        recipe.create_date=request.data["create_date"]
+        recipe.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        # except Recipe.DoesNotExist as ex:
+        #     return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, pk):
         """Deletes a recipe"""
