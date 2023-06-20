@@ -5,33 +5,19 @@ from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 
-from tastyapi.serializers import RecipeSerializer, RecipeTastyUserSerializer
+from tastyapi.serializers import RecipeSerializer
 from tastyapi.models import Recipe, Category
 
 class ProfileView(ViewSet):
     """Profile View"""
 
-    def list(self, request, pk=None):
-        """Gets the profile information of the current user
-        
-        Returns:
-            Response -- JSON serialized profile data
-        """
 
+    def list(self, request):
+        """Gets the recipes posted by a current user"""
         user = request.user
-        user_serializer = RecipeTastyUserSerializer(user)
-
-        profile_data = {
-            'author': user_serializer.data,
-            'recipe': None
-        }
-
-        recipe = Recipe.objects.filter(author=user).first()
-        if recipe:
-            serializer = RecipeSerializer(recipe)
-            profile_data['recipe'] = serializer.data
-
-        return Response(profile_data, status=status.HTTP_200_OK)
+        recipes = Recipe.objects.filter(author=user)
+        serializer = RecipeSerializer(recipes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def destroy_recipe(self, request):
         """Deletes the recipe of the current user"""
@@ -44,29 +30,19 @@ class ProfileView(ViewSet):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    # def update_recipe(self, request, pk):
-    #     """Edit a recipe of the current user"""
-    #     category = Category.objects.get(pk=request.data["category"])
+    # def list(self, request, pk=None):
 
-    #     try:
-    #         user = request.user
-    #         recipe = Recipe.objects.filter(author=user, pk=pk).first()
-    #         if not recipe:
-    #             return Response({'message': 'Recipe not found.'}, status=status.HTTP_404_NOT_FOUND)
+        # user = request.user
+        # user_serializer = RecipeTastyUserSerializer(user)
 
-    #         recipe.name = request.data["name"]
-    #         recipe.category = category
-    #         recipe.image_path = request.data["image_path"]
-    #         recipe.summary = request.data["summary"]
-    #         recipe.cook_time = request.data["cook_time"]
-    #         recipe.prep_time = request.data["prep_time"]
-    #         recipe.total_time = request.data["total_time"]
-    #         recipe.ingredients = request.data["ingredients"]
-    #         recipe.preparation = request.data["preparation"]
-    #         recipe.create_date = request.data["create_date"]
-    #         recipe.save()
+        # profile_data = {
+        #     'author': user_serializer.data,
+        #     'recipe': None
+        # }
 
-    #         serializer = RecipeSerializer(recipe)
-    #         return Response(serializer.data, status=status.HTTP_200_OK)
-    #     except ValidationError as ex:
-    #         return Response({'message': ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+        # recipe = Recipe.objects.filter(author=user).first()
+        # if recipe:
+        #     serializer = RecipeSerializer(recipe)
+        #     profile_data['recipe'] = serializer.data
+
+        # return Response(profile_data, status=status.HTTP_200_OK)
