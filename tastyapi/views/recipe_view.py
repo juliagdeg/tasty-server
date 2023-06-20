@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import action
 
-from tastyapi.models import Rating
+from tastyapi.models import Rating, Comment
 
 from tastyapi.serializers import RecipeSerializer
 
@@ -110,4 +110,26 @@ class RecipeView(ViewSet):
             )
 
         return Response({'message': 'Rating added'}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['post'], detail=True, url_path='recipe-comments')
+    def add_recipe_comment(self, request, pk):
+        """Comment on a recipe"""
+        recipe = Recipe.objects.get(pk=pk)
+
+        try:
+            comment = Comment.objects.get(
+                user=request.auth.user, recipe=recipe
+            )
+            comment.content = request.data['content']
+            comment.postdate=request.data['postdate']
+            comment.save()
+        except Comment.DoesNotExist:
+            comment = Comment.objects.create(
+                user=request.auth.user,
+                recipe=recipe,
+                content=request.data['content'],
+                postdate=request.data['postdate']
+            )
+
+        return Response({'message': 'Comment added'}, status=status.HTTP_201_CREATED)
     # TO-DO: Recipes will need to be filtered by category - query.param
