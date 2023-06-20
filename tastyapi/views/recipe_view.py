@@ -102,14 +102,14 @@ class RecipeView(ViewSet):
             )
             rating.score = request.data['score']
             rating.save()
+            return Response({'message': 'Rating updated'}, status=status.HTTP_200_OK)
         except Rating.DoesNotExist:
-            rating = Rating.objects.create(
+            Rating.objects.create(
                 user=request.auth.user,
                 recipe=recipe,
                 score=request.data['score']
             )
-
-        return Response({'message': 'Rating added'}, status=status.HTTP_201_CREATED)
+            return Response({'message': 'Rating added'}, status=status.HTTP_201_CREATED)
 
     @action(methods=['post'], detail=True, url_path='recipe-comments')
     def add_recipe_comment(self, request, pk):
@@ -132,4 +132,24 @@ class RecipeView(ViewSet):
             )
 
         return Response({'message': 'Comment added'}, status=status.HTTP_201_CREATED)
+    
+    # @action(methods=['post'], detail=True, url_path='rate-recipe')
+    # def rate_recipe(self, request, pk):
+    #     """Rate a recipe"""
+    #     recipe = Recipe.objects.get(pk=pk)
+
+    #     try:
+    #         rating = Rating.objects.get(
+    #             user=request.auth.user, recipe=recipe
+    #         )
+    #         rating.score = request.data['score']
+    #         rating.save()
+    #     except Rating.DoesNotExist:
+    #         rating = Rating.objects.create(
+    #             user=request.auth.user,
+    #             recipe=recipe,
+    #             score=request.data['score']
+    #         )
+
+    #     return Response({'message': 'Rating added'}, status=status.HTTP_201_CREATED)
     # TO-DO: Recipes will need to be filtered by category - query.param
