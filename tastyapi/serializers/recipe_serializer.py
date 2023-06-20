@@ -12,12 +12,19 @@ class RecipeCategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('id', 'name')
 
+class AddRecipeRatingSerializer(serializers.Serializer):
+    score = serializers.IntegerField()
+    rating = serializers.CharField()
+
 class RecipeSerializer(serializers.ModelSerializer):
     """JSON serializer for recipe posts"""
 
     author = RecipeTastyUserSerializer(many=False)
     category = RecipeCategorySerializer(many=False)
+    rating = AddRecipeRatingSerializer(many=True, read_only=True)
+
     class Meta:
         model = Recipe
-        fields = ('id', 'name', 'category', 'image_path', 'summary', 'cook_time', 'prep_time', 'total_time', 'ingredients', 'preparation', 'create_date', 'author')
-        depth = 2
+        fields = ('id', 'name', 'category', 'image_path', 'summary',
+                  'cook_time', 'prep_time', 'total_time', 'ingredients', 
+                  'preparation', 'create_date', 'author', 'ratings')

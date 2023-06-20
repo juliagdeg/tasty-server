@@ -13,3 +13,27 @@ class Recipe(models.Model):
     preparation = models.TextField(max_length=3000, null=True)
     create_date = models.DateField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # TO-DO: Add a user_rating custom property
+
+    # TO-DO: Add an avg_rating custom property
+    @property
+    def average_rating(self):
+        """Average rating calculated attribute for each recipe
+        Returns:
+            number --- the avg rating for a recipe
+        """
+
+        total_rating = 0
+        ratings_count = self.ratings.count()
+
+        if ratings_count != 0:
+            for rating in self.ratings.all():
+                total_rating += rating.score
+
+            avg = total_rating / self.ratings.count()
+
+        else:
+            avg = 0
+
+        return avg
