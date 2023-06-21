@@ -33,4 +33,3 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'category', 'image_path', 'summary',
                   'cook_time', 'prep_time', 'total_time', 'ingredients', 
                   'preparation', 'create_date', 'author', 'ratings', 'comments', 'average_rating')
-
